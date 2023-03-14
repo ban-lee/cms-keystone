@@ -1,6 +1,10 @@
 import { allowAll } from '@keystone-6/core/access';
 import { document } from '@keystone-6/fields-document';
+import { Event } from './src/schema/arknights/Event';
 import { list } from '@keystone-6/core';
+import { Material } from './src/schema/arknights/Material';
+import { Operator } from './src/schema/arknights/Operator';
+import { Skin } from './src/schema/arknights/Skin';
 import { User } from './src/schema/admin/User';
 
 import {
@@ -96,4 +100,9 @@ export const lists: Lists = {
       posts: relationship({ ref: 'Post.tags', many: true }),
     },
   }),
+
+  Event,
+  Material,
+  Operator,
+  Skin,
 };
