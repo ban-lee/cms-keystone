@@ -24,6 +24,7 @@ export const Material = list({
         { label: 'T3', value: 't3', },
         { label: 'T4', value: 't4', },
         { label: 'T5', value: 't5', },
+        { label: 'T6', value: 't6', },
       ],
       ui: {
         displayMode: 'select',
@@ -37,6 +38,9 @@ export const Material = list({
         }),
         sortId: text({
           label: 'Sort ID',
+        }),
+        imgId: text({
+          label: 'Image ID',
         }),
       },
     }),

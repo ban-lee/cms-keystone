@@ -23,6 +23,18 @@ export const Event = list({
     name: text({
       validation: { isRequired: true },
     }),
+    createdDate: timestamp({
+      defaultValue: { kind: 'now' },
+      ui: {
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'read',
+          fieldPosition: 'sidebar',
+        },
+      },
+    }),
     materials: relationship({
       ref: 'Material',
       many: true,

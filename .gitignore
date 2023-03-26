@@ -35,3 +35,4 @@ schema.prisma
 schema.graphql
 
 *.log
+data/

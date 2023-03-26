@@ -100,6 +100,18 @@ var Event = (0, import_core.list)({
     name: (0, import_fields.text)({
       validation: { isRequired: true }
     }),
+    createdDate: (0, import_fields.timestamp)({
+      defaultValue: { kind: "now" },
+      ui: {
+        createView: {
+          fieldMode: "hidden"
+        },
+        itemView: {
+          fieldMode: "read",
+          fieldPosition: "sidebar"
+        }
+      }
+    }),
     materials: (0, import_fields.relationship)({
       ref: "Material",
       many: true,
@@ -192,7 +204,8 @@ var Material = (0, import_core2.list)({
         { label: "T2", value: "t2" },
         { label: "T3", value: "t3" },
         { label: "T4", value: "t4" },
-        { label: "T5", value: "t5" }
+        { label: "T5", value: "t5" },
+        { label: "T6", value: "t6" }
       ],
       ui: {
         displayMode: "select"
@@ -206,6 +219,9 @@ var Material = (0, import_core2.list)({
         }),
         sortId: (0, import_fields2.text)({
           label: "Sort ID"
+        }),
+        imgId: (0, import_fields2.text)({
+          label: "Image ID"
         })
       }
     })
@@ -405,7 +421,36 @@ var Skin = (0, import_core4.list)({
           label: "Image ID"
         })
       }
+    }),
+    label: (0, import_fields4.text)({
+      hooks: {
+        resolveInput: async ({
+          resolvedData,
+          context
+        }) => {
+          const { name, operator } = resolvedData;
+          const { name: opName } = await context.query.Operator.findOne({
+            where: { id: operator.connect.id },
+            query: `name`
+          });
+          return `${name} [${opName}]`;
+        }
+      },
+      ui: {
+        createView: {
+          fieldMode: "hidden"
+        },
+        itemView: {
+          fieldMode: "hidden"
+        }
+      }
     })
+  },
+  ui: {
+    listView: {
+      initialColumns: ["label", "brand"]
+    },
+    searchFields: ["name", "brand", "operator"]
   }
 });
 
@@ -615,9 +660,12 @@ var keystone_default = withAuth(
   (0, import_core7.config)({
     db: {
       provider: "postgresql",
-      url: process.env.DB_URL,
+      url: process.env.DATABASE_URL,
       enableLogging: true,
       idField: { kind: "uuid" }
+    },
+    server: {
+      port: 3001
     },
     lists,
     session

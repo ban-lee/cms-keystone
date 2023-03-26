@@ -60,5 +60,35 @@ export const Skin = list({
         }),
       },
     }),
+    label: text({
+      hooks: {
+        resolveInput: async ({
+          resolvedData,
+          context,
+        }) => {
+          const { name, operator } = resolvedData;
+          const { name: opName } = await context.query.Operator.findOne({
+            where: { id: (operator.connect.id) },
+            query: `name`,
+          });
+
+          return `${name} [${opName}]`;
+        },
+      },
+      ui: {
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
+  },
+  ui: {
+    listView: {
+      initialColumns: ['label', 'brand'],
+    },
+    searchFields: ['name', 'brand', 'operator'],
   },
 });

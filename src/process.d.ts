@@ -1,6 +1,6 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    DB_URL: string;
+    DATABASE_URL: string;
     SESSION_SECRET: string;
 
     CLOUDINARY_NAME: string;
