@@ -10,6 +10,13 @@ export const Skin = list({
       query: () => true,
     }
   },
+  ui: {
+    listView: {
+      initialColumns: ['label', 'brand'],
+      initialSort: { field: 'label', direction: 'ASC' },
+    },
+    searchFields: ['name', 'brand', 'operator'],
+  },
   fields: {
     name: text({
       validation: { isRequired: true },
@@ -63,12 +70,15 @@ export const Skin = list({
     label: text({
       hooks: {
         resolveInput: async ({
+          item,
           resolvedData,
           context,
         }) => {
-          const { name, operator } = resolvedData;
+          const name = resolvedData.name ?? item!.name;
+          const operatorId = resolvedData.operator?.connect?.id ?? item!.operatorId;
+
           const { name: opName } = await context.query.Operator.findOne({
-            where: { id: (operator.connect.id) },
+            where: { id: operatorId },
             query: `name`,
           });
 
@@ -84,11 +94,5 @@ export const Skin = list({
         },
       },
     }),
-  },
-  ui: {
-    listView: {
-      initialColumns: ['label', 'brand'],
-    },
-    searchFields: ['name', 'brand', 'operator'],
   },
 });

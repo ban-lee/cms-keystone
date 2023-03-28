@@ -96,6 +96,12 @@ var Event = (0, import_core.list)({
       query: () => true
     }
   },
+  ui: {
+    listView: {
+      initialColumns: ["name", "estimatedStart", "days"],
+      initialSort: { field: "estimatedStart", direction: "ASC" }
+    }
+  },
   fields: {
     name: (0, import_fields.text)({
       validation: { isRequired: true }
@@ -122,7 +128,7 @@ var Event = (0, import_core.list)({
     headerImg: (0, import_cloudinary2.cloudinaryImage)({
       cloudinary: {
         ...CLOUDINARY_CONFIG,
-        folder: "ak-headers"
+        folder: "ks/ak-headers"
       }
     }),
     ...(0, import_core.group)({
@@ -372,6 +378,13 @@ var Skin = (0, import_core4.list)({
       query: () => true
     }
   },
+  ui: {
+    listView: {
+      initialColumns: ["label", "brand"],
+      initialSort: { field: "label", direction: "ASC" }
+    },
+    searchFields: ["name", "brand", "operator"]
+  },
   fields: {
     name: (0, import_fields4.text)({
       validation: { isRequired: true },
@@ -425,12 +438,14 @@ var Skin = (0, import_core4.list)({
     label: (0, import_fields4.text)({
       hooks: {
         resolveInput: async ({
+          item,
           resolvedData,
           context
         }) => {
-          const { name, operator } = resolvedData;
+          const name = resolvedData.name ?? item.name;
+          const operatorId = resolvedData.operator?.connect?.id ?? item.operatorId;
           const { name: opName } = await context.query.Operator.findOne({
-            where: { id: operator.connect.id },
+            where: { id: operatorId },
             query: `name`
           });
           return `${name} [${opName}]`;
@@ -445,12 +460,6 @@ var Skin = (0, import_core4.list)({
         }
       }
     })
-  },
-  ui: {
-    listView: {
-      initialColumns: ["label", "brand"]
-    },
-    searchFields: ["name", "brand", "operator"]
   }
 });
 

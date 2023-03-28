@@ -19,6 +19,12 @@ export const Event = list({
       query: () => true,
     }
   },
+  ui: {
+    listView: {
+      initialColumns: ['name', 'estimatedStart', 'days'],
+      initialSort: { field: 'estimatedStart', direction: 'ASC' },
+    },
+  },
   fields: {
     name: text({
       validation: { isRequired: true },
@@ -45,7 +51,7 @@ export const Event = list({
     headerImg: cloudinaryImage({
       cloudinary: {
         ...CLOUDINARY_CONFIG,
-        folder: 'ak-headers',
+        folder: 'ks/ak-headers',
       },
     }),
     ...group({
