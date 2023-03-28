@@ -10,17 +10,6 @@ const { withAuth } = createAuth({
   secretField: 'password',
 
   sessionData: 'name isAdmin',
-
-  // WARNING: remove initFirstItem functionality in production
-  //   see https://keystonejs.com/docs/config/auth#init-first-item for more
-  initFirstItem: {
-    fields: ['name', 'email', 'password'],
-
-    // the following fields are configured by default for this item
-    itemData: {
-      isAdmin: true,
-    },
-  },
 });
 
 const sessionMaxAge = 60 * 60 * 24 * 30;
