@@ -6,18 +6,17 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
-    "postinstall": "keystone build --no-ui --frozen"
+    "docker-build": "docker build -t cms-keystone:latest -t cms-keystone:$npm_package_version ."
   },
   "dependencies": {
     "@keystone-6/auth": "^7.0.0",
     "@keystone-6/cloudinary": "^7.0.0",
-    "@keystone-6/core": "^5.0.0",
+    "@keystone-6/core": "^5.1.0",
     "@keystone-6/fields-document": "^7.0.0",
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
-    "prisma": "4.11.0",
     "typescript": "^4.9.5"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.0"
 }
