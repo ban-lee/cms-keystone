@@ -6,7 +6,7 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
-    "postbuild": "keystone build --no-ui --frozen",
+    "rebuild": "keystone build --no-ui --frozen",
     "docker-build": "docker build -t cms-keystone:latest -t cms-keystone:$npm_package_version ."
   },
   "dependencies": {

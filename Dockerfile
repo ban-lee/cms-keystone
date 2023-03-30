@@ -1,18 +1,11 @@
 # https://docs.docker.com/samples/library/node/
 ARG NODE_VERSION=19
-# https://github.com/Yelp/dumb-init/releases
-ARG DUMB_INIT_VERSION=1.2.5
 
 # Build container
 FROM node:${NODE_VERSION}-alpine AS deps
 WORKDIR /app
 
-ARG DUMB_INIT_VERSION
-
-RUN apk add --no-cache build-base libc6-compat python3 yarn
-RUN wget -O dumb-init -q https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64.deb && \
-    chmod +x dumb-init
-
+RUN apk add --no-cache libc6-compat
 RUN yarn set version 3.5.0
 COPY /.yarnrc.yml package.json yarn.lock ./
 
@@ -25,6 +18,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules /app/node_modules
 COPY . .
 
+ARG SESSION_SECRET
+ARG CLOUDINARY_NAME
+ARG CLOUDINARY_KEY
+ARG CLOUDINARY_SECRET
+
 RUN yarn build && yarn cache clean
 
 # Runtime container
@@ -34,4 +32,4 @@ WORKDIR /app
 COPY --from=build /app /app
 
 EXPOSE 3001
-CMD ["./dumb-init", "yarn", "start"]
+CMD ["yarn", "start"]

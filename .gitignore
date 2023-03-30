@@ -29,10 +29,8 @@ node_modules/
 .DS_Store
 
 ### KeystoneJS ###
-.keystone/admin
+.keystone/
 keystone.db
-schema.prisma
-schema.graphql
 
 *.log
 data/

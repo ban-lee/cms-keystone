@@ -1,9 +1,6 @@
-import * as dotenv from 'dotenv';
 import { config } from '@keystone-6/core';
 import { lists } from './schema';
 import { session, withAuth } from './auth';
-
-dotenv.config();
 
 export default withAuth(
   config({

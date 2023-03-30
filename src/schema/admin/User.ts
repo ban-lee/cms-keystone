@@ -8,14 +8,11 @@ import type { Lists } from '.keystone/types';
 export const User: ListConfig<Lists.User.TypeInfo, any> = list({
   access: {
     operation: {
-      create: allowAll,
+      create: isAdmin,
       query: allowAll,
-
       // only allow users to update _anything_, but what they can update is limited by
       //   the access.filter.* and access.item.* access controls
       update: hasSession,
-
-      // only allow admins to delete users
       delete: isAdmin,
     },
     filter: {
@@ -95,15 +92,5 @@ export const User: ListConfig<Lists.User.TypeInfo, any> = list({
       // this sets the timestamp to Date.now() when the user is first created
       defaultValue: { kind: 'now' },
     }),
-
-
-    /**
-     *
-     * Relationships
-     *
-     */
-    // we can use this field to see what Posts this User has authored
-    //   more on that in the Post list below
-    posts: relationship({ ref: 'Post.author', many: true }),
   },
 });
