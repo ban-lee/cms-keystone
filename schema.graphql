@@ -456,6 +456,7 @@ input MaterialCreateInput {
 type Operator {
   id: ID!
   name: String
+  searchableName: String
   rarity: Int
   class: OperatorClassType
   archetype: OperatorArchetypeType
@@ -546,6 +547,7 @@ input OperatorWhereInput {
   NOT: [OperatorWhereInput!]
   id: IDFilter
   name: StringFilter
+  searchableName: StringFilter
   rarity: IntFilter
   class: OperatorClassTypeNullableFilter
   archetype: OperatorArchetypeTypeNullableFilter
@@ -581,6 +583,7 @@ input OperatorArchetypeTypeNullableFilter {
 input OperatorOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  searchableName: OrderDirection
   rarity: OrderDirection
   class: OrderDirection
   archetype: OrderDirection
@@ -589,6 +592,7 @@ input OperatorOrderByInput {
 
 input OperatorUpdateInput {
   name: String
+  searchableName: String
   rarity: Int
   class: OperatorClassType
   archetype: OperatorArchetypeType
@@ -603,6 +607,7 @@ input OperatorUpdateArgs {
 
 input OperatorCreateInput {
   name: String
+  searchableName: String
   rarity: Int
   class: OperatorClassType
   archetype: OperatorArchetypeType

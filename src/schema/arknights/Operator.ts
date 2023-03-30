@@ -11,7 +11,7 @@ export const Operator = list({
     }
   },
   ui: {
-    searchFields: ['name', 'class', 'archetype'],
+    searchFields: ['name', 'searchableName'],
     listView: {
       initialColumns: ['name', 'rarity', 'class'],
       initialSort: { field: 'rarity', direction: 'ASC' },
@@ -22,6 +22,7 @@ export const Operator = list({
       validation: { isRequired: true },
       isIndexed: 'unique',
     }),
+    searchableName: text(),
     rarity: integer({
       defaultValue: 1,
       validation: {

@@ -58,6 +58,7 @@ model Material {
 model Operator {
   id                  String                 @id @default(uuid()) @postgresql.Uuid
   name                String                 @unique @default("")
+  searchableName      String                 @default("")
   rarity              Int                    @default(1)
   class               OperatorClassType?
   archetype           OperatorArchetypeType?
