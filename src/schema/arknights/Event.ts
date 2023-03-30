@@ -48,10 +48,16 @@ export const Event = list({
         hideCreate: true,
       },
     }),
-    headerImg: cloudinaryImage({
-      cloudinary: {
-        ...CLOUDINARY_CONFIG,
-        folder: 'ks/ak-headers',
+    ...group({
+      label: 'Header',
+      fields: {
+        headerImg: cloudinaryImage({
+          cloudinary: {
+            ...CLOUDINARY_CONFIG,
+            folder: 'ks/ak-headers',
+          },
+        }),
+        topColour: text(),
       },
     }),
     ...group({

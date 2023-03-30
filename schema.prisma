@@ -26,6 +26,7 @@ model Event {
   createdDate    DateTime?  @default(now())
   materials      Material[] @relation("Event_materials")
   headerImg      Json?
+  topColour      String     @default("")
   days           Int?
   cnStart        DateTime?  @postgresql.Date
   estimatedStart DateTime?  @postgresql.Date
