@@ -4,6 +4,7 @@ import {
   checkbox,
   integer,
   relationship,
+  select,
   text,
   timestamp
   } from '@keystone-6/core/fields';
@@ -85,8 +86,18 @@ export const Event = list({
           label: 'Free Operator',
           ref: 'Operator',
         }),
+        bannerType: select({
+          type: 'enum',
+          options: [
+            { label: 'Single Standard', value: 'single' },
+            { label: 'Limited', value: 'limited' },
+            { label: 'Special Collab', value: 'spcollab' },
+            { label: 'Joint Operation', value: 'jointop' },
+            { label: 'None', value: 'none' },
+          ],
+        }),
         bannerOp: relationship({
-          label: 'Banner',
+          label: 'Banner Operators',
           ref: 'Operator',
           many: true,
         }),

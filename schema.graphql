@@ -138,6 +138,7 @@ type Event {
   enStart: DateTime
   enEnd: DateTime
   freeOp: Operator
+  bannerType: EventBannerTypeType
   bannerOp(where: OperatorWhereInput! = {}, orderBy: [OperatorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatorWhereUniqueInput): [Operator!]
   bannerOpCount(where: OperatorWhereInput! = {}): Int
   freeSkin: Skin
@@ -198,6 +199,14 @@ input CloudinaryImageFormat {
 
 scalar CalendarDay @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
+enum EventBannerTypeType {
+  single
+  limited
+  spcollab
+  jointop
+  none
+}
+
 input EventWhereUniqueInput {
   id: ID
 }
@@ -217,6 +226,7 @@ input EventWhereInput {
   enStart: DateTimeNullableFilter
   enEnd: DateTimeNullableFilter
   freeOp: OperatorWhereInput
+  bannerType: EventBannerTypeTypeNullableFilter
   bannerOp: OperatorManyRelationFilter
   freeSkin: SkinWhereInput
   newSkin: SkinManyRelationFilter
@@ -252,6 +262,13 @@ input CalendarDayNullableFilter {
   not: CalendarDayNullableFilter
 }
 
+input EventBannerTypeTypeNullableFilter {
+  equals: EventBannerTypeType
+  in: [EventBannerTypeType!]
+  notIn: [EventBannerTypeType!]
+  not: EventBannerTypeTypeNullableFilter
+}
+
 input OperatorManyRelationFilter {
   every: OperatorWhereInput
   some: OperatorWhereInput
@@ -274,6 +291,7 @@ input EventOrderByInput {
   estimatedStart: OrderDirection
   enStart: OrderDirection
   enEnd: OrderDirection
+  bannerType: OrderDirection
   fashionReview: OrderDirection
 }
 
@@ -289,6 +307,7 @@ input EventUpdateInput {
   enStart: DateTime
   enEnd: DateTime
   freeOp: OperatorRelateToOneForUpdateInput
+  bannerType: EventBannerTypeType
   bannerOp: OperatorRelateToManyForUpdateInput
   freeSkin: SkinRelateToOneForUpdateInput
   newSkin: SkinRelateToManyForUpdateInput
@@ -349,6 +368,7 @@ input EventCreateInput {
   enStart: DateTime
   enEnd: DateTime
   freeOp: OperatorRelateToOneForCreateInput
+  bannerType: EventBannerTypeType
   bannerOp: OperatorRelateToManyForCreateInput
   freeSkin: SkinRelateToOneForCreateInput
   newSkin: SkinRelateToManyForCreateInput
