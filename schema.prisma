@@ -21,26 +21,26 @@ model User {
 }
 
 model Event {
-  id             String               @id @default(uuid()) @postgresql.Uuid
-  name           String               @default("")
-  createdDate    DateTime?            @default(now())
-  materials      Material[]           @relation("Event_materials")
+  id             String              @id @default(uuid()) @postgresql.Uuid
+  name           String              @default("")
+  createdDate    DateTime?           @default(now())
+  materials      Material[]          @relation("Event_materials")
   headerImg      Json?
-  topColour      String               @default("")
+  topColour      String              @default("")
   days           Int?
-  cnStart        DateTime?            @postgresql.Date
-  estimatedStart DateTime?            @postgresql.Date
+  cnStart        DateTime?           @postgresql.Date
+  estimatedStart DateTime?           @postgresql.Date
   enStart        DateTime?
   enEnd          DateTime?
-  freeOp         Operator?            @relation("Event_freeOp", fields: [freeOpId], references: [id])
-  freeOpId       String?              @map("freeOp") @postgresql.Uuid
-  bannerType     EventBannerTypeType?
-  bannerOp       Operator[]           @relation("Event_bannerOp")
-  freeSkin       Skin?                @relation("Event_freeSkin", fields: [freeSkinId], references: [id])
-  freeSkinId     String?              @map("freeSkin") @postgresql.Uuid
-  newSkin        Skin[]               @relation("Event_newSkin")
-  rerunSkin      Skin[]               @relation("Event_rerunSkin")
-  fashionReview  Boolean              @default(false)
+  freeOp         Operator?           @relation("Event_freeOp", fields: [freeOpId], references: [id])
+  freeOpId       String?             @map("freeOp") @postgresql.Uuid
+  bannerType     EventBannerTypeType
+  bannerOp       Operator[]          @relation("Event_bannerOp")
+  freeSkin       Skin?               @relation("Event_freeSkin", fields: [freeSkinId], references: [id])
+  freeSkinId     String?             @map("freeSkin") @postgresql.Uuid
+  newSkin        Skin[]              @relation("Event_newSkin")
+  rerunSkin      Skin[]              @relation("Event_rerunSkin")
+  fashionReview  Boolean             @default(false)
 
   @@index([freeOpId])
   @@index([freeSkinId])

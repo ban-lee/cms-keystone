@@ -88,6 +88,7 @@ export const Event = list({
         }),
         bannerType: select({
           type: 'enum',
+          validation: { isRequired: true },
           options: [
             { label: 'Single Standard', value: 'single' },
             { label: 'Limited', value: 'limited' },
