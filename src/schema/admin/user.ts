@@ -1,5 +1,5 @@
 import { allowAll } from '@keystone-6/core/access';
-import { checkbox, password, relationship, text, timestamp } from '@keystone-6/core/fields';
+import { checkbox, password, text, timestamp } from '@keystone-6/core/fields';
 import { hasSession, isAdmin, isAdminOrSameUser, isAdminOrSameUserFilter } from '../../utils/session';
 import { list } from '@keystone-6/core';
 import type { ListConfig } from '@keystone-6/core/types';

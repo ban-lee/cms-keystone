@@ -12,7 +12,7 @@ COPY /.yarnrc.yml package.json yarn.lock ./
 RUN yarn install --immutable
 
 # Rebuild the source code only when needed
-FROM node:${NODE_VERSION}-alpine AS build
+FROM node:${NODE_VERSION}-alpine AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
@@ -29,7 +29,7 @@ RUN yarn build && yarn cache clean
 FROM node:${NODE_VERSION}-alpine as runner
 WORKDIR /app
 
-COPY --from=build /app /app
+COPY --from=builder /app /app
 
 EXPOSE 3001
 CMD ["yarn", "start"]
