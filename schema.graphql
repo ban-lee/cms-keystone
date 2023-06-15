@@ -401,6 +401,71 @@ input SkinRelateToManyForCreateInput {
   connect: [SkinWhereUniqueInput!]
 }
 
+type GachaBanner {
+  id: ID!
+  name: String
+  type: GachaBannerTypeType
+  description: String
+  rateUpOps(where: OperatorWhereInput! = {}, orderBy: [OperatorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatorWhereUniqueInput): [Operator!]
+  rateUpOpsCount(where: OperatorWhereInput! = {}): Int
+}
+
+enum GachaBannerTypeType {
+  single
+  limited
+  collab
+  jointop
+  warmup
+}
+
+input GachaBannerWhereUniqueInput {
+  id: ID
+}
+
+input GachaBannerWhereInput {
+  AND: [GachaBannerWhereInput!]
+  OR: [GachaBannerWhereInput!]
+  NOT: [GachaBannerWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  type: GachaBannerTypeTypeNullableFilter
+  description: StringFilter
+  rateUpOps: OperatorManyRelationFilter
+}
+
+input GachaBannerTypeTypeNullableFilter {
+  equals: GachaBannerTypeType
+  in: [GachaBannerTypeType!]
+  notIn: [GachaBannerTypeType!]
+  not: GachaBannerTypeTypeNullableFilter
+}
+
+input GachaBannerOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  type: OrderDirection
+  description: OrderDirection
+}
+
+input GachaBannerUpdateInput {
+  name: String
+  type: GachaBannerTypeType
+  description: String
+  rateUpOps: OperatorRelateToManyForUpdateInput
+}
+
+input GachaBannerUpdateArgs {
+  where: GachaBannerWhereUniqueInput!
+  data: GachaBannerUpdateInput!
+}
+
+input GachaBannerCreateInput {
+  name: String
+  type: GachaBannerTypeType
+  description: String
+  rateUpOps: OperatorRelateToManyForCreateInput
+}
+
 type Material {
   id: ID!
   name: String
@@ -483,6 +548,7 @@ type Operator {
   charId: String
   skins(where: SkinWhereInput! = {}, orderBy: [SkinOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkinWhereUniqueInput): [Skin!]
   skinsCount(where: SkinWhereInput! = {}): Int
+  banners: GachaBanner
 }
 
 enum OperatorClassType {
@@ -573,6 +639,7 @@ input OperatorWhereInput {
   archetype: OperatorArchetypeTypeNullableFilter
   charId: StringFilter
   skins: SkinManyRelationFilter
+  banners: GachaBannerWhereInput
 }
 
 input IntFilter {
@@ -618,6 +685,13 @@ input OperatorUpdateInput {
   archetype: OperatorArchetypeType
   charId: String
   skins: SkinRelateToManyForUpdateInput
+  banners: GachaBannerRelateToOneForUpdateInput
+}
+
+input GachaBannerRelateToOneForUpdateInput {
+  create: GachaBannerCreateInput
+  connect: GachaBannerWhereUniqueInput
+  disconnect: Boolean
 }
 
 input OperatorUpdateArgs {
@@ -633,6 +707,12 @@ input OperatorCreateInput {
   archetype: OperatorArchetypeType
   charId: String
   skins: SkinRelateToManyForCreateInput
+  banners: GachaBannerRelateToOneForCreateInput
+}
+
+input GachaBannerRelateToOneForCreateInput {
+  create: GachaBannerCreateInput
+  connect: GachaBannerWhereUniqueInput
 }
 
 type Skin {
@@ -747,6 +827,12 @@ type Mutation {
   updateEvents(data: [EventUpdateArgs!]!): [Event]
   deleteEvent(where: EventWhereUniqueInput!): Event
   deleteEvents(where: [EventWhereUniqueInput!]!): [Event]
+  createGachaBanner(data: GachaBannerCreateInput!): GachaBanner
+  createGachaBanners(data: [GachaBannerCreateInput!]!): [GachaBanner]
+  updateGachaBanner(where: GachaBannerWhereUniqueInput!, data: GachaBannerUpdateInput!): GachaBanner
+  updateGachaBanners(data: [GachaBannerUpdateArgs!]!): [GachaBanner]
+  deleteGachaBanner(where: GachaBannerWhereUniqueInput!): GachaBanner
+  deleteGachaBanners(where: [GachaBannerWhereUniqueInput!]!): [GachaBanner]
   createMaterial(data: MaterialCreateInput!): Material
   createMaterials(data: [MaterialCreateInput!]!): [Material]
   updateMaterial(where: MaterialWhereUniqueInput!, data: MaterialUpdateInput!): Material
@@ -787,6 +873,9 @@ type Query {
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   event(where: EventWhereUniqueInput!): Event
   eventsCount(where: EventWhereInput! = {}): Int
+  gachaBanners(where: GachaBannerWhereInput! = {}, orderBy: [GachaBannerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GachaBannerWhereUniqueInput): [GachaBanner!]
+  gachaBanner(where: GachaBannerWhereUniqueInput!): GachaBanner
+  gachaBannersCount(where: GachaBannerWhereInput! = {}): Int
   materials(where: MaterialWhereInput! = {}, orderBy: [MaterialOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MaterialWhereUniqueInput): [Material!]
   material(where: MaterialWhereUniqueInput!): Material
   materialsCount(where: MaterialWhereInput! = {}): Int

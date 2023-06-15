@@ -46,6 +46,14 @@ model Event {
   @@index([freeSkinId])
 }
 
+model GachaBanner {
+  id          String              @id @default(uuid()) @postgresql.Uuid
+  name        String              @default("")
+  type        GachaBannerTypeType
+  description String              @default("")
+  rateUpOps   Operator[]          @relation("Operator_banners")
+}
+
 model Material {
   id                   String              @id @default(uuid()) @postgresql.Uuid
   name                 String              @unique @default("")
@@ -65,8 +73,12 @@ model Operator {
   archetype           OperatorArchetypeType?
   charId              String                 @default("")
   skins               Skin[]                 @relation("Skin_operator")
+  banners             GachaBanner?           @relation("Operator_banners", fields: [bannersId], references: [id])
+  bannersId           String?                @map("banners") @postgresql.Uuid
   from_Event_freeOp   Event[]                @relation("Event_freeOp")
   from_Event_bannerOp Event[]                @relation("Event_bannerOp")
+
+  @@index([bannersId])
 }
 
 model Skin {
@@ -92,6 +104,14 @@ enum EventBannerTypeType {
   spcollab
   jointop
   none
+}
+
+enum GachaBannerTypeType {
+  single
+  limited
+  collab
+  jointop
+  warmup
 }
 
 enum MaterialRarityType {

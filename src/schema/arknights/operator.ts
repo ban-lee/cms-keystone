@@ -131,5 +131,9 @@ export const Operator = list({
       },
       many: true,
     }),
+
+    banners: relationship({
+      ref: 'GachaBanner.rateUpOps',
+    }),
   },
 });

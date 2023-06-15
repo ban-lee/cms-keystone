@@ -1,4 +1,5 @@
 import { Event } from './src/schema/arknights/event';
+import { GachaBanner } from './src/schema/arknights/gacha-banner';
 import { Material } from './src/schema/arknights/material';
 import { Operator } from './src/schema/arknights/operator';
 import { Skin } from './src/schema/arknights/skin';
@@ -10,6 +11,7 @@ export const lists: Lists = {
 
   // Arknights
   Event,
+  GachaBanner,
   Material,
   Operator,
   Skin,
