@@ -1,13 +1,5 @@
 import { allOperations } from '@keystone-6/core/access';
-import {
-  calendarDay,
-  checkbox,
-  integer,
-  relationship,
-  select,
-  text,
-  timestamp
-  } from '@keystone-6/core/fields';
+import { calendarDay, checkbox, integer, relationship, select, text, timestamp } from '@keystone-6/core/fields';
 import { CLOUDINARY_CONFIG } from '../../utils/cloudinary';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { group, list } from '@keystone-6/core';
