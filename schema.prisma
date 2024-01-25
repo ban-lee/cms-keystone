@@ -183,6 +183,7 @@ enum OperatorArchetypeType {
   pushstroker
   reaper
   sacrificialspecialist
+  sentinelprotector
   splashcaster
   spreadshooter
   standardbearer
@@ -192,4 +193,8 @@ enum OperatorArchetypeType {
   therapist
   trapmaster
   wanderingmedic
+  hunter
+  loopshooter
+  ritualist
+  primcaster
 }

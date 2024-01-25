@@ -4,8 +4,9 @@ import { CLOUDINARY_CONFIG } from '../../utils/cloudinary';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { group, list } from '@keystone-6/core';
 import { hasSession } from '../../utils/session';
+import type { Lists } from '.keystone/types';
 
-export const Event = list({
+export const Event = list<Lists.Event.TypeInfo, any>({
   access: {
     operation: {
       ...allOperations(hasSession),

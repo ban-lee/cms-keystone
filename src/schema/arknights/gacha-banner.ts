@@ -2,8 +2,9 @@ import { allOperations } from '@keystone-6/core/access';
 import { hasSession } from '../../utils/session';
 import { list } from '@keystone-6/core';
 import { relationship, select, text } from '@keystone-6/core/fields';
+import type { Lists } from '.keystone/types';
 
-export const GachaBanner = list({
+export const GachaBanner = list<Lists.Event.TypeInfo, any>({
   access: {
     operation: {
       ...allOperations(hasSession),

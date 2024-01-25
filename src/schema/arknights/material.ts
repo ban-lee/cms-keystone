@@ -1,9 +1,10 @@
 import { allOperations } from '@keystone-6/core/access';
 import { group, list } from '@keystone-6/core';
 import { hasSession } from '../../utils/session';
-import { relationship, select, text } from '@keystone-6/core/fields';
+import { select, text } from '@keystone-6/core/fields';
+import type { Lists } from '.keystone/types';
 
-export const Material = list({
+export const Material = list<Lists.Material.TypeInfo, any>({
   access: {
     operation: {
       ...allOperations(hasSession),

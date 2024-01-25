@@ -2,8 +2,9 @@ import { allOperations } from '@keystone-6/core/access';
 import { hasSession } from '../../utils/session';
 import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
+import type { Lists } from '.keystone/types';
 
-export const Operator = list({
+export const Operator = list<Lists.Operator.TypeInfo, any>({
   access: {
     operation: {
       ...allOperations(hasSession),
@@ -98,6 +99,7 @@ export const Operator = list({
         { label: 'Push Stroker', value: 'pushstroker' },
         { label: 'Reaper', value: 'reaper' },
         { label: 'Sacrificial Specialist', value: 'sacrificialspecialist' },
+        { label: 'Sentinel Protector', value: 'sentinelprotector' },
         { label: 'Splash Caster', value: 'splashcaster' },
         { label: 'Spreadshooter', value: 'spreadshooter' },
         { label: 'Standard Bearer', value: 'standardbearer' },
@@ -107,6 +109,11 @@ export const Operator = list({
         { label: 'Therapist', value: 'therapist' },
         { label: 'Trapmaster', value: 'trapmaster' },
         { label: 'Wandering Medic', value: 'wanderingmedic' },
+
+        { label: 'Hunter', value: 'hunter' },
+        { label: 'Loopshooter', value: 'loopshooter' },
+        { label: 'Ritualist', value: 'ritualist' },
+        { label: 'Primal Caster', value: 'primcaster' },
       ],
       ui: {
         displayMode: 'select',

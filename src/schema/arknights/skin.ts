@@ -2,8 +2,9 @@ import { allOperations } from '@keystone-6/core/access';
 import { group, list } from '@keystone-6/core';
 import { hasSession } from '../../utils/session';
 import { relationship, select, text } from '@keystone-6/core/fields';
+import type { Lists } from '.keystone/types';
 
-export const Skin = list({
+export const Skin = list<Lists.Skin.TypeInfo, any>({
   access: {
     operation: {
       ...allOperations(hasSession),
@@ -45,6 +46,8 @@ export const Skin = list({
         { label: 'Collab Series', value: 'collabseries' },
         { label: 'Shining Steps', value: 'shiningsteps' },
         { label: 'Achievement Star', value: 'achievementstar' },
+
+        { label: '0011/韵系列', value: 'yun' },
       ],
       ui: {
         displayMode: 'select',

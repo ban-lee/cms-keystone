@@ -15,7 +15,7 @@ export function isAdminOrSameUser({
   session,
   item,
 }: {
-  session: Session | undefined;
+  session?: Session;
   item: Lists.User.Item;
 }) {
   // you need to have a session to do this
