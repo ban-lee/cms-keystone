@@ -11,7 +11,7 @@ export default withAuth(
       idField: { kind: 'uuid' },
     },
     server: {
-      port: 3001,
+      port: parseInt(process.env.PORT) || 3001,
     },
     lists,
     session,

@@ -18,6 +18,7 @@ node_modules/
 .env.local
 
 ### VisualStudioCode ###
+.editorconfig
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
