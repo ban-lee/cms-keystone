@@ -21,37 +21,43 @@ model User {
 }
 
 model Event {
-  id             String              @id @default(uuid()) @postgresql.Uuid
-  name           String              @default("")
-  createdDate    DateTime?           @default(now())
-  materials      Material[]          @relation("Event_materials")
-  headerImg      Json?
-  topColour      String              @default("")
-  days           Int?
-  cnStart        DateTime?           @postgresql.Date
-  estimatedStart DateTime?           @postgresql.Date
-  enStart        DateTime?
-  enEnd          DateTime?
-  freeOp         Operator?           @relation("Event_freeOp", fields: [freeOpId], references: [id])
-  freeOpId       String?             @map("freeOp") @postgresql.Uuid
-  bannerType     EventBannerTypeType
-  bannerOp       Operator[]          @relation("Event_bannerOp")
-  freeSkin       Skin?               @relation("Event_freeSkin", fields: [freeSkinId], references: [id])
-  freeSkinId     String?             @map("freeSkin") @postgresql.Uuid
-  newSkin        Skin[]              @relation("Event_newSkin")
-  rerunSkin      Skin[]              @relation("Event_rerunSkin")
-  fashionReview  Boolean             @default(false)
+  id                       String        @id @default(uuid()) @postgresql.Uuid
+  name                     String        @default("")
+  createdDate              DateTime?     @default(now())
+  materials                Material[]    @relation("Event_materials")
+  headerImg                Json?
+  topColour                String        @default("")
+  days                     Int?
+  cnStart                  DateTime?     @postgresql.Date
+  estimatedStart           DateTime?     @postgresql.Date
+  enStart                  DateTime?
+  banner                   GachaBanner?  @relation("Event_banner", fields: [bannerId], references: [id])
+  bannerId                 String?       @map("banner") @postgresql.Uuid
+  freeOp                   Operator?     @relation("Event_freeOp", fields: [freeOpId], references: [id])
+  freeOpId                 String?       @map("freeOp") @postgresql.Uuid
+  freeSkin                 Skin?         @relation("Event_freeSkin", fields: [freeSkinId], references: [id])
+  freeSkinId               String?       @map("freeSkin") @postgresql.Uuid
+  newSkin                  Skin[]        @relation("Event_newSkin")
+  rerunSkin                Skin[]        @relation("Event_rerunSkin")
+  fashionReview            Boolean       @default(false)
+  from_GachaBanner_banners GachaBanner[] @relation("GachaBanner_banners")
 
+  @@index([bannerId])
   @@index([freeOpId])
   @@index([freeSkinId])
 }
 
 model GachaBanner {
-  id          String              @id @default(uuid()) @postgresql.Uuid
-  name        String              @default("")
-  type        GachaBannerTypeType
-  description String              @default("")
-  rateUpOps   Operator[]          @relation("Operator_banners")
+  id                String              @id @default(uuid()) @postgresql.Uuid
+  name              String              @default("")
+  type              GachaBannerTypeType
+  rateUpOps         Operator[]          @relation("Operator_banners")
+  description       String              @default("")
+  banners           Event?              @relation("GachaBanner_banners", fields: [bannersId], references: [id])
+  bannersId         String?             @map("banners") @postgresql.Uuid
+  from_Event_banner Event[]             @relation("Event_banner")
+
+  @@index([bannersId])
 }
 
 model Material {
@@ -65,18 +71,17 @@ model Material {
 }
 
 model Operator {
-  id                  String                 @id @default(uuid()) @postgresql.Uuid
-  name                String                 @unique @default("")
-  searchableName      String                 @default("")
-  rarity              Int                    @default(1)
-  class               OperatorClassType?
-  archetype           OperatorArchetypeType?
-  charId              String                 @default("")
-  skins               Skin[]                 @relation("Skin_operator")
-  banners             GachaBanner?           @relation("Operator_banners", fields: [bannersId], references: [id])
-  bannersId           String?                @map("banners") @postgresql.Uuid
-  from_Event_freeOp   Event[]                @relation("Event_freeOp")
-  from_Event_bannerOp Event[]                @relation("Event_bannerOp")
+  id                String                 @id @default(uuid()) @postgresql.Uuid
+  name              String                 @unique @default("")
+  searchableName    String                 @default("")
+  rarity            Int                    @default(1)
+  class             OperatorClassType?
+  archetype         OperatorArchetypeType?
+  charId            String                 @default("")
+  skins             Skin[]                 @relation("Skin_operator")
+  banners           GachaBanner?           @relation("Operator_banners", fields: [bannersId], references: [id])
+  bannersId         String?                @map("banners") @postgresql.Uuid
+  from_Event_freeOp Event[]                @relation("Event_freeOp")
 
   @@index([bannersId])
 }
@@ -96,14 +101,6 @@ model Skin {
   from_Event_rerunSkin Event[]   @relation("Event_rerunSkin")
 
   @@index([operatorId])
-}
-
-enum EventBannerTypeType {
-  single
-  limited
-  spcollab
-  jointop
-  none
 }
 
 enum GachaBannerTypeType {

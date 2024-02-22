@@ -30,15 +30,18 @@ export const GachaBanner = list<Lists.Event.TypeInfo, any>({
         { label: 'Warm-up', value: 'warmup' },
       ],
     }),
+    rateUpOps: relationship({
+      label: 'Rate-Up Operators',
+      ref: 'Operator.banners',
+      many: true,
+    }),
     description: text({
       ui: {
         displayMode: 'textarea',
       },
     }),
-    rateUpOps: relationship({
-      label: 'Rate-Up Operators',
-      ref: 'Operator.banners',
-      many: true,
+    banners: relationship({
+      ref: 'Event',
     }),
   },
 });

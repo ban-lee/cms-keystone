@@ -136,11 +136,8 @@ type Event {
   cnStart: CalendarDay
   estimatedStart: CalendarDay
   enStart: DateTime
-  enEnd: DateTime
+  banner: GachaBanner
   freeOp: Operator
-  bannerType: EventBannerTypeType
-  bannerOp(where: OperatorWhereInput! = {}, orderBy: [OperatorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatorWhereUniqueInput): [Operator!]
-  bannerOpCount(where: OperatorWhereInput! = {}): Int
   freeSkin: Skin
   newSkin(where: SkinWhereInput! = {}, orderBy: [SkinOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkinWhereUniqueInput): [Skin!]
   newSkinCount(where: SkinWhereInput! = {}): Int
@@ -199,14 +196,6 @@ input CloudinaryImageFormat {
 
 scalar CalendarDay @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
-enum EventBannerTypeType {
-  single
-  limited
-  spcollab
-  jointop
-  none
-}
-
 input EventWhereUniqueInput {
   id: ID
 }
@@ -224,10 +213,8 @@ input EventWhereInput {
   cnStart: CalendarDayNullableFilter
   estimatedStart: CalendarDayNullableFilter
   enStart: DateTimeNullableFilter
-  enEnd: DateTimeNullableFilter
+  banner: GachaBannerWhereInput
   freeOp: OperatorWhereInput
-  bannerType: EventBannerTypeTypeNullableFilter
-  bannerOp: OperatorManyRelationFilter
   freeSkin: SkinWhereInput
   newSkin: SkinManyRelationFilter
   rerunSkin: SkinManyRelationFilter
@@ -262,19 +249,6 @@ input CalendarDayNullableFilter {
   not: CalendarDayNullableFilter
 }
 
-input EventBannerTypeTypeNullableFilter {
-  equals: EventBannerTypeType
-  in: [EventBannerTypeType!]
-  notIn: [EventBannerTypeType!]
-  not: EventBannerTypeTypeNullableFilter
-}
-
-input OperatorManyRelationFilter {
-  every: OperatorWhereInput
-  some: OperatorWhereInput
-  none: OperatorWhereInput
-}
-
 input SkinManyRelationFilter {
   every: SkinWhereInput
   some: SkinWhereInput
@@ -290,8 +264,6 @@ input EventOrderByInput {
   cnStart: OrderDirection
   estimatedStart: OrderDirection
   enStart: OrderDirection
-  enEnd: OrderDirection
-  bannerType: OrderDirection
   fashionReview: OrderDirection
 }
 
@@ -305,10 +277,8 @@ input EventUpdateInput {
   cnStart: CalendarDay
   estimatedStart: CalendarDay
   enStart: DateTime
-  enEnd: DateTime
+  banner: GachaBannerRelateToOneForUpdateInput
   freeOp: OperatorRelateToOneForUpdateInput
-  bannerType: EventBannerTypeType
-  bannerOp: OperatorRelateToManyForUpdateInput
   freeSkin: SkinRelateToOneForUpdateInput
   newSkin: SkinRelateToManyForUpdateInput
   rerunSkin: SkinRelateToManyForUpdateInput
@@ -325,17 +295,16 @@ input MaterialRelateToManyForUpdateInput {
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
+input GachaBannerRelateToOneForUpdateInput {
+  create: GachaBannerCreateInput
+  connect: GachaBannerWhereUniqueInput
+  disconnect: Boolean
+}
+
 input OperatorRelateToOneForUpdateInput {
   create: OperatorCreateInput
   connect: OperatorWhereUniqueInput
   disconnect: Boolean
-}
-
-input OperatorRelateToManyForUpdateInput {
-  disconnect: [OperatorWhereUniqueInput!]
-  set: [OperatorWhereUniqueInput!]
-  create: [OperatorCreateInput!]
-  connect: [OperatorWhereUniqueInput!]
 }
 
 input SkinRelateToOneForUpdateInput {
@@ -366,10 +335,8 @@ input EventCreateInput {
   cnStart: CalendarDay
   estimatedStart: CalendarDay
   enStart: DateTime
-  enEnd: DateTime
+  banner: GachaBannerRelateToOneForCreateInput
   freeOp: OperatorRelateToOneForCreateInput
-  bannerType: EventBannerTypeType
-  bannerOp: OperatorRelateToManyForCreateInput
   freeSkin: SkinRelateToOneForCreateInput
   newSkin: SkinRelateToManyForCreateInput
   rerunSkin: SkinRelateToManyForCreateInput
@@ -381,14 +348,14 @@ input MaterialRelateToManyForCreateInput {
   connect: [MaterialWhereUniqueInput!]
 }
 
+input GachaBannerRelateToOneForCreateInput {
+  create: GachaBannerCreateInput
+  connect: GachaBannerWhereUniqueInput
+}
+
 input OperatorRelateToOneForCreateInput {
   create: OperatorCreateInput
   connect: OperatorWhereUniqueInput
-}
-
-input OperatorRelateToManyForCreateInput {
-  create: [OperatorCreateInput!]
-  connect: [OperatorWhereUniqueInput!]
 }
 
 input SkinRelateToOneForCreateInput {
@@ -405,9 +372,10 @@ type GachaBanner {
   id: ID!
   name: String
   type: GachaBannerTypeType
-  description: String
   rateUpOps(where: OperatorWhereInput! = {}, orderBy: [OperatorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatorWhereUniqueInput): [Operator!]
   rateUpOpsCount(where: OperatorWhereInput! = {}): Int
+  description: String
+  banners: Event
 }
 
 enum GachaBannerTypeType {
@@ -429,8 +397,9 @@ input GachaBannerWhereInput {
   id: IDFilter
   name: StringFilter
   type: GachaBannerTypeTypeNullableFilter
-  description: StringFilter
   rateUpOps: OperatorManyRelationFilter
+  description: StringFilter
+  banners: EventWhereInput
 }
 
 input GachaBannerTypeTypeNullableFilter {
@@ -438,6 +407,12 @@ input GachaBannerTypeTypeNullableFilter {
   in: [GachaBannerTypeType!]
   notIn: [GachaBannerTypeType!]
   not: GachaBannerTypeTypeNullableFilter
+}
+
+input OperatorManyRelationFilter {
+  every: OperatorWhereInput
+  some: OperatorWhereInput
+  none: OperatorWhereInput
 }
 
 input GachaBannerOrderByInput {
@@ -450,8 +425,22 @@ input GachaBannerOrderByInput {
 input GachaBannerUpdateInput {
   name: String
   type: GachaBannerTypeType
-  description: String
   rateUpOps: OperatorRelateToManyForUpdateInput
+  description: String
+  banners: EventRelateToOneForUpdateInput
+}
+
+input OperatorRelateToManyForUpdateInput {
+  disconnect: [OperatorWhereUniqueInput!]
+  set: [OperatorWhereUniqueInput!]
+  create: [OperatorCreateInput!]
+  connect: [OperatorWhereUniqueInput!]
+}
+
+input EventRelateToOneForUpdateInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+  disconnect: Boolean
 }
 
 input GachaBannerUpdateArgs {
@@ -462,8 +451,19 @@ input GachaBannerUpdateArgs {
 input GachaBannerCreateInput {
   name: String
   type: GachaBannerTypeType
-  description: String
   rateUpOps: OperatorRelateToManyForCreateInput
+  description: String
+  banners: EventRelateToOneForCreateInput
+}
+
+input OperatorRelateToManyForCreateInput {
+  create: [OperatorCreateInput!]
+  connect: [OperatorWhereUniqueInput!]
+}
+
+input EventRelateToOneForCreateInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
 }
 
 type Material {
@@ -693,12 +693,6 @@ input OperatorUpdateInput {
   banners: GachaBannerRelateToOneForUpdateInput
 }
 
-input GachaBannerRelateToOneForUpdateInput {
-  create: GachaBannerCreateInput
-  connect: GachaBannerWhereUniqueInput
-  disconnect: Boolean
-}
-
 input OperatorUpdateArgs {
   where: OperatorWhereUniqueInput!
   data: OperatorUpdateInput!
@@ -713,11 +707,6 @@ input OperatorCreateInput {
   charId: String
   skins: SkinRelateToManyForCreateInput
   banners: GachaBannerRelateToOneForCreateInput
-}
-
-input GachaBannerRelateToOneForCreateInput {
-  create: GachaBannerCreateInput
-  connect: GachaBannerWhereUniqueInput
 }
 
 type Skin {

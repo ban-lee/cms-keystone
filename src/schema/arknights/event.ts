@@ -67,33 +67,18 @@ export const Event = list<Lists.Event.TypeInfo, any>({
         enStart: timestamp({
           label: 'Start (EN)',
         }),
-        enEnd: timestamp({
-          label: 'End (EN)',
-        }),
       },
     }),
     ...group({
       label: 'Operators',
       fields: {
+        banner: relationship({
+          label: 'Banner',
+          ref: 'GachaBanner',
+        }),
         freeOp: relationship({
           label: 'Free Operator',
           ref: 'Operator',
-        }),
-        bannerType: select({
-          type: 'enum',
-          validation: { isRequired: true },
-          options: [
-            { label: 'Single Standard', value: 'single' },
-            { label: 'Limited', value: 'limited' },
-            { label: 'Special Collab', value: 'spcollab' },
-            { label: 'Joint Operation', value: 'jointop' },
-            { label: 'None', value: 'none' },
-          ],
-        }),
-        bannerOp: relationship({
-          label: 'Banner Operators',
-          ref: 'Operator',
-          many: true,
         }),
       },
     }),
